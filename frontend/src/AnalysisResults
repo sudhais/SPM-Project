@@ -1,0 +1,13 @@
+import React from 'react'
+
+function AnalysisResults({ analysisResult }) {
+  return (
+    <div className='results'>
+      <h2>Analysis Results</h2>
+      <p>ICB Metric Result: {analysisResult}</p>
+      {/* You can display more details about the analysis result here */}
+    </div>
+  )
+}
+
+export default AnalysisResults

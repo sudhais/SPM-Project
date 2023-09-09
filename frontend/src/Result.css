@@ -1,0 +1,55 @@
+/* results.css */
+
+/* Container for the entire results section */
+.analyze-result-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Styles for the code editor */
+.code-editor {
+  width: 60%;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+/* Styles for the result details */
+.result-details {
+  width: 30%;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+.exceeded-message {
+  color: red;
+}
+/* Heading styles */
+.analyze-result-heading {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* Paragraph styles for code size and code lines */
+.result-details p {
+  font-size: 18px;
+  margin: 8px 0;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+  .analyze-result-container {
+    flex-direction: column;
+  }
+
+  /* Adjust the widths for mobile devices */
+  .code-editor,
+  .result-details {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

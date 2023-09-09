@@ -1,0 +1,20 @@
+/* AnalyzeResult.css */
+.analyze-result-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.analyze-result-heading {
+  font-size: 24px;
+  color: #333; /* Change to your desired text color */
+}
+
+.result-text {
+  font-size: 18px;
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc; /* Add a border for a clean look */
+  border-radius: 5px; /* Round the corners of the result box */
+  background-color: #f7f7f7; /* Add a light background color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
