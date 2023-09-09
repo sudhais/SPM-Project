@@ -4,6 +4,7 @@ const express = require('express');
 dotenv.config({path:path.join(__dirname , 'configs/config.env')});
 const connectdb = require('./configs/db');
 const cors = require('cors');
+const connect = require('./utils/database.connection');
 
 const app = express();
 
@@ -11,7 +12,8 @@ const app = express();
 const details = require('./routes/details')
 
 //connect mongodb
-connectdb();
+// connectdb();
+connect();
 
 //middle ware
 app.use(cors());

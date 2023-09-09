@@ -13,8 +13,8 @@ const HistoryTable = ({details})=> {
 
   return(
     <div className="driver-details" >
-      
-      <h4>{details.userID}</h4>  
+      <br/>
+      <h4 class="text-primary">{details.userID}</h4><br/>  
       <table class="table table-bordered">
         <thead><tr>
           <th scope="col">Line No</th>

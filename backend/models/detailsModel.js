@@ -5,7 +5,7 @@ const detailsSchema = new mongoose.Schema({
     type : String,
     required : [true, "Please enter user ID"],
     trim: true,
-    maxLength : [20,"user ID cannot exceed 100 characters"]
+    maxLength : [20,"user ID cannot exceed 20 characters"]
   },
   reports: [{
     lineNo:Number,
@@ -18,6 +18,20 @@ const detailsSchema = new mongoose.Schema({
     multiply:Number
     
   }]
+
+  // reports:[
+  //   [{
+  //     lineNo:Number,
+  //     statement:String,
+  //     size: Number,
+  //     control:Number,
+  //     inheritence:Number,
+  //     nested:Number,
+  //     total:Number,
+  //     multiply:Number
+      
+  //   }]
+  // ]
 }, {timeStamp: true});
 
 let schema = mongoose.model('detail', detailsSchema);
