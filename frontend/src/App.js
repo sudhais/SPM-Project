@@ -6,7 +6,7 @@ import './App.css'
 
 //component
 import Home from './components/Home'
-import Sabeel from './pages/SabeelTest'
+import History from './pages/History'
 
 function App() {
   const [code, setCode] = useState('')
@@ -15,7 +15,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' Component={Home}></Route>
-        <Route path='/test' element={<Sabeel/>} ></Route>
+        <Route path='/test' element={<History/>} ></Route>
       </Routes>
     </BrowserRouter>
     
