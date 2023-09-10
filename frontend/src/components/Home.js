@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom'
 
 function Home() {
   const [code, setCode] = useState('')
-  const [codeSize, setCodeSize] = useState(0)
+  const [codeCount, setCodeCount] = useState(0) //save as 0
   const [codeLine, setCodeLine] = useState(0)
   const [ifElseCount, setIfElseCount] = useState(0)
-  const [selectedOption, setSelectedOption] = useState('codeSize')
+  const [selectedOption, setSelectedOption] = useState('codeCount')
   const [userInput, setUserInput] = useState('')
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function Home() {
 
   const handleCodeChange = (value) => {
     setCode(value)
-    setCodeSize(value.length)
+    setCodeCount(value.length)
     const linesOfCode = value
       .split('\n')
       .filter((line) => line.trim() !== '').length
@@ -26,9 +26,9 @@ function Home() {
   }
 
   const handleAnalyzeClick = () => {
-    // Store codeSize, codeLine, ifElseCount, selectedOption, and userInput in local storage
+    // Store codeCount, codeLine, ifElseCount, selectedOption, and userInput in local storage
     localStorage.setItem('code', code)
-    localStorage.setItem('codeSize', codeSize)
+    localStorage.setItem('codeCount', codeCount)
     localStorage.setItem('codeLine', codeLine)
     localStorage.setItem('ifElseCount', ifElseCount)
     localStorage.setItem('selectedOption', selectedOption)
@@ -91,7 +91,7 @@ function Home() {
             <label>
               Select Option:
               <select value={selectedOption} onChange={handleOptionChange}>
-                <option value='codeSize'>Code Size</option>
+                <option value='codeCount'>Code Count</option>
                 <option value='codeLine'>Code Line</option>
                 <option value='ifElseCount'>If-Else Count</option>
               </select>
