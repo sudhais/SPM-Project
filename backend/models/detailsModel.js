@@ -8,16 +8,23 @@ const detailsSchema = new mongoose.Schema({
     maxLength : [20,"user ID cannot exceed 20 characters"]
   },
   reports: [{
+    class: String,
+    method: String,
     lineNo:Number,
     statement:String,
     size: Number,
-    control:Number,
-    inheritence:Number,
     nested:Number,
+    inheritence:Number,
+    control:Number,
     total:Number,
     multiply:Number
     
-  }]
+  }],
+  value:{
+    type: Number,
+    required : [true, "Please enter ICB value"],
+    trim: true
+  }
 
   // reports:[
   //   [{

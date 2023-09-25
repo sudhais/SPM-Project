@@ -22,7 +22,7 @@ const History = ()=> {
 
     getAllDetails();
   },[details])
-  console.log(details[1]);
+  // console.log(details[1]);
 
 
   return(
