@@ -2,10 +2,21 @@ const path = require('path');
 const dotenv = require('dotenv');
 const express = require('express');
 dotenv.config({path:path.join(__dirname , 'configs/config.env')});
+const connectdb = require('./configs/db');
+const cors = require('cors');
+const connect = require('./utils/database.connection');
 
 const app = express();
 
+//details router 
+const details = require('./routes/details')
+
+//connect mongodb
+// connectdb();
+connect();
+
 //middle ware
+app.use(cors());
 app.use(express.json())
 
 app.use((req,res,next)=>{
@@ -15,7 +26,7 @@ app.use((req,res,next)=>{
 
 
 //routes
-
+app.use("/api", details);
 
 //error url middleware
 app.use('*', (req,res,next)=>{
