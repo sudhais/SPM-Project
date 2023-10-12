@@ -12,7 +12,18 @@ class ApiFeatures{
       }    
     }:{};
 
-    this.query.find({...keyword});
+    let keyword1 = this.queryStr.keyword1 ?{
+      "reports.class":{
+        $regex: this.queryStr.keyword1,
+        $options: 'i'
+      }    
+    }:{};
+
+    // let keyword1 = this.queryStr.keyword1 ?{
+    //   "reports.class": `${this.queryStr.keyword1}`   
+    // }:{};
+
+    this.query.find({...keyword,...keyword1});
     return this;
   } 
 }

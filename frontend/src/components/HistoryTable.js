@@ -1,6 +1,6 @@
 import axios from "axios";
 import './HistoryTable.css'; // Import the CSS file
-import { useCallback, useEffect } from "react";
+import {useEffect } from "react";
 const HistoryTable = ({ details }) => {
   useEffect(()=>{
     

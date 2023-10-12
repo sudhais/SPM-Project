@@ -31,7 +31,8 @@ exports.createDetails = async (req,res) => {
 exports.getAllDetails= async (req,res)=> {
 
   try {
-    const apiFeatures = new ApiFeatures(Details.find().sort({name:-1}), req.query).search()
+    // console.log(req.query.keyword1);
+    const apiFeatures = new ApiFeatures(Details.find().sort({userID:-1}), req.query).search()
     const details = await apiFeatures.query;
 
     if(!details) {
