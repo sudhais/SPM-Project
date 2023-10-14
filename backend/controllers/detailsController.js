@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
-const Details = require('../models/detailsModel');
-const ApiFeatures = require('../utils/apiFeatures');
+import { Types } from 'mongoose';
+import Details from '../models/detailsModel.js';
+import ApiFeatures from '../utils/apiFeatures.js';
 
 
 //create a new details
-exports.createDetails = async (req,res) => {
+export async function createDetails(req,res) {
 
   try {
     const details = await Details.create(req.body);
@@ -28,7 +28,7 @@ exports.createDetails = async (req,res) => {
 }
 
 //get all details with search by userID
-exports.getAllDetails= async (req,res)=> {
+export async function getAllDetails(req,res) {
 
   try {
     // console.log(req.query.keyword1);
@@ -56,12 +56,12 @@ exports.getAllDetails= async (req,res)=> {
 }
 
 //get a single details
-exports.getSingleDetail = async (req,res)=>{
+export async function getSingleDetail(req,res){
 
   
   try {
     const {id} = req.params;
-    if(!mongoose.Types.ObjectId.isValid(id)) {
+    if(!Types.ObjectId.isValid(id)) {
       return res.status(404).json({
         success: false,
         message: 'No such a detail file',
@@ -90,11 +90,11 @@ exports.getSingleDetail = async (req,res)=>{
 }
 
 //delete a details
-exports.deleteDetails = async (req,res)=>{
+export async function deleteDetails(req,res){
 
   const {id} = req.params;
   try {
-    if(!mongoose.Types.ObjectId.isValid(id)) {
+    if(!Types.ObjectId.isValid(id)) {
       return res.status(404).json({
         success: false,
         message: 'No such detail file',

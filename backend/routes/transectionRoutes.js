@@ -1,13 +1,8 @@
-const express = require("express");
-const {
-  addTransection,
-  getAllTransection,
-  editTransection,
-  deleteTransection,
-} = require("../controllers/transectionCtrl");
+import { Router } from "express";
+import { addTransection, getAllTransection, editTransection, deleteTransection } from "../controllers/transectionCtrl.js";
 
 //router object
-const router = express.Router();
+const router = Router();
 
 //routes
 //add transection POST MEthod
@@ -20,4 +15,4 @@ router.post("/delete-transection", deleteTransection);
 //get transections
 router.post("/get-transection", getAllTransection);
 
-module.exports = router;
+export default router;

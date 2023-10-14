@@ -55,9 +55,9 @@
 // module.exports = { getAllTransection, addTransection, editTransection,
 //   deleteTransection };
 
-const transectionModel = require("../models/transectionModel");
-const moment = require("moment");
-const getAllTransection = async (req, res) => {
+import transectionModel from "../models/transectionModel.js";
+import moment from "moment";
+export const getAllTransection = async (req, res) => {
   try {
     const { frequency, selectedDate, type } = req.body;
     const transections = await transectionModel.find({
@@ -83,7 +83,7 @@ const getAllTransection = async (req, res) => {
   }
 };
 
-const deleteTransection = async (req, res) => {
+export const deleteTransection = async (req, res) => {
   try {
     await transectionModel.findOneAndDelete({ _id: req.body.transacationId });
     res.status(200).send("Transaction Deleted!");
@@ -92,7 +92,7 @@ const deleteTransection = async (req, res) => {
     res.status(500).json(error);
   }
 };
-const editTransection = async (req, res) => {
+export const editTransection = async (req, res) => {
   try {
     await transectionModel.findOneAndUpdate(
       { _id: req.body.transacationId },
@@ -105,7 +105,7 @@ const editTransection = async (req, res) => {
   }
 };
 
-const addTransection = async (req, res) => {
+export const addTransection = async (req, res) => {
   try {
     // const newTransection = new transectionModel(req.body);
     const newTransection = new transectionModel(req.body);
@@ -117,7 +117,7 @@ const addTransection = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   getAllTransection,
   addTransection,
   editTransection,

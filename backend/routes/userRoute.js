@@ -1,8 +1,8 @@
-const express = require('express');
-const { loginController, registerController } = require('../controllers/userController');
+import { Router } from 'express';
+import { loginController, registerController } from '../controllers/userController.js';
 
 //router objetc
-const router = express.Router()
+const router = Router()
 
 //routers
 
@@ -15,4 +15,4 @@ router.post('/register',registerController);
 
 
 
-module.exports = router
+export default router

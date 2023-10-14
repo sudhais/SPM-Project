@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const transectionSchema = new mongoose.Schema(
+const transectionSchema = new Schema(
     {
       userid: {
         type: String,
@@ -33,5 +33,5 @@ const transectionSchema = new mongoose.Schema(
     { timestamps: true }
   );
   
-  const transectionModel = mongoose.model("transections", transectionSchema);
-  module.exports = transectionModel;
+  const transectionModel = model("transections", transectionSchema);
+  export default transectionModel;

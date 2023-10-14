@@ -1,29 +1,26 @@
-const path = require('path');
-const dotenv = require('dotenv');
-const morgan = require('morgan');
-const express = require('express');
-const color = require('colors');
-dotenv.config({path:path.join(__dirname , 'configs/config.env')});
-const connectdb = require('./configs/db');
-const cors = require('cors');
-const connect = require('./utils/database.connection');
+import { join } from 'path';
+import { config } from 'dotenv';
+import morgan from 'morgan';
+import express, { json } from 'express';
+import color from 'colors';
+config({path:join('C:\\Users\\DELL\\Desktop\\assignment\\spm\\project\\SPM-Project\\backend', 'configs/config.env')});
+import cors from 'cors';
+import connect from './utils/database.connection.js';
 
 const app = express();
 
 //details router 
-const details = require('./routes/details')
+import details from './routes/details.js';
+import codeAnalyzer from './routes/codeAnalyzer.js';
+import user from './routes/userRoute.js';
+import transection from './routes/transectionRoutes.js';
 
-//user router
-
-
-//connect mongodb
-// connectdb();
 connect();
 
 //middle ware
 app.use(morgan('dev'));
 app.use(cors());
-app.use(express.json())
+app.use(json())
 
 app.use((req,res,next)=>{
   console.log(req.path,req.method);
@@ -33,8 +30,11 @@ app.use((req,res,next)=>{
 
 //routes
 app.use("/api", details);
-app.use('/api/v1/users', require('./routes/userRoute'));
-app.use("/api/v1/transections", require("./routes/transectionRoutes"));
+// app.use('/api/v1/users', import('./routes/userRoute.js').default);
+app.use('/api/v1/users', user);
+// app.use("/api/v1/transections", require("./routes/transectionRoutes.js").default);
+app.use("/api/v1/transections", transection);
+app.use('/analyze-code', codeAnalyzer);
 
 //error url middleware
 app.use('*', (req,res,next)=>{

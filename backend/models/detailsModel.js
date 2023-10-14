@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+import { Schema, model } from 'mongoose';
 
-const detailsSchema = new mongoose.Schema({
+const detailsSchema = new Schema({
   userID: {
     type : String,
     required : [true, "Please enter user ID"],
@@ -41,6 +41,6 @@ const detailsSchema = new mongoose.Schema({
   // ]
 }, {timeStamp: true});
 
-let schema = mongoose.model('detail', detailsSchema);
+let schema = model('detail', detailsSchema);
 
-module.exports = schema;
+export default schema;

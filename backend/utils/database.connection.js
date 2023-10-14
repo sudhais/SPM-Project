@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const logger = require('../utils/logger') 
+import { connect as _connect } from 'mongoose';
+import logger from '../utils/logger.js'; 
 
 let database;
 
@@ -7,7 +7,7 @@ const connect = async () => {
     
     if (database) return;
 
-    mongoose.connect(process.env.MONG_URI)
+    _connect(process.env.MONG_URI)
     .then((connection)=> {
         database = connection;
         logger.info("Database Synced");
@@ -18,4 +18,4 @@ const connect = async () => {
     })
 };
 
-module.exports = connect
+export default connect
