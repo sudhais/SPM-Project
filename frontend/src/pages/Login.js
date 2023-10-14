@@ -74,7 +74,9 @@ const Login = () => {
         "user",
         JSON.stringify({ ...data.user, password: "" })
       );
-      navigate("/");
+      localStorage.setItem('userID', data.user.name)
+      // console.log(data.user.name);
+      navigate("/home");
     } catch (error) {
       setLoading(false);
       message.error("something went wrong");

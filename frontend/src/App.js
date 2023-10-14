@@ -1,6 +1,6 @@
 // App.js
-import React, { useState } from 'react'
-
+import React from 'react'
+import 'mdb-react-ui-kit/dist/css/mdb.min.css'
 import {BrowserRouter, Route, Routes, Navigate} from 'react-router-dom';
 import './App.css'
 
@@ -12,10 +12,14 @@ import HomePage from "./pages/HomePage";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 
+import SideNavBar from './components/SideBar'
+import AnalyzeResult from './pages/AnalyzeResult'
+
 function App() {
 
   return (
     <BrowserRouter>
+      <SideNavBar />
       <Routes>
         <Route path='/' 
           element={
@@ -27,7 +31,8 @@ function App() {
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/home' Component={Home}></Route>
-        <Route path='/test' element={<History/>} ></Route>
+        <Route path='/history' element={<History/>} ></Route>
+        <Route path='/analyzeResult' element={<AnalyzeResult />}></Route>
       </Routes>
     </BrowserRouter>
     
