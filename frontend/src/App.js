@@ -13,7 +13,6 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 
 function App() {
-  const [code, setCode] = useState('')
 
   return (
     <BrowserRouter>
@@ -27,7 +26,7 @@ function App() {
           />
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
-        <Route path='/chech' Component={Home}></Route>
+        <Route path='/home' Component={Home}></Route>
         <Route path='/test' element={<History/>} ></Route>
       </Routes>
     </BrowserRouter>
