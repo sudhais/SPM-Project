@@ -8,12 +8,24 @@ function Home() {
   const [codeCount, setCodeCount] = useState(0) //save as 0
   const [codeLine, setCodeLine] = useState(0)
   const [ifElseCount, setIfElseCount] = useState(0)
-  const [selectedOption, setSelectedOption] = useState('codeCount')
+  const [singleLineComments, setSingleLineComments] = useState(0)
+  const [multiLineComments, setMultiLineComment] = useState(0)
+  const [classes, setClasses] = useState(0)
+  const [methods, setMethods] = useState(0)
+  const [whileLoops, setWhileLoops] = useState(0)
+  const [forLoops, setForLoops] = useState(0)
+  const [selectedOption, setSelectedOption] = useState('singleLineComments')
   const [userInput, setUserInput] = useState('')
 
   useEffect(() => {
     // Update if-else count whenever code changes
     countIfElseStatements(code)
+    countSingleLineComments(code)
+    countMultiLineComments(code)
+    countClasses(code)
+    countMethods(code)
+    countWhileLoops(code)
+    countForLoops(code)
   }, [code])
 
   const handleCodeChange = (value) => {
@@ -31,6 +43,12 @@ function Home() {
     localStorage.setItem('codeCount', codeCount)
     localStorage.setItem('codeLine', codeLine)
     localStorage.setItem('ifElseCount', ifElseCount)
+    localStorage.setItem('singleLineComments', singleLineComments)
+    localStorage.setItem('multiLineComments', multiLineComments)
+    localStorage.setItem('whileLoops', whileLoops)
+    localStorage.setItem('forLoops', forLoops)
+    localStorage.setItem('methods', methods)
+    localStorage.setItem('classes', classes)
     localStorage.setItem('selectedOption', selectedOption)
     localStorage.setItem('userInput', userInput)
   }
@@ -62,6 +80,97 @@ function Home() {
     setIfElseCount(count)
   }
 
+  const countSingleLineComments = (javaCode) => {
+    const lines = javaCode.split('\n')
+    let commentCount = 0
+
+    for (const line of lines) {
+      const trimmedLine = line.trim()
+      if (trimmedLine.startsWith('//')) {
+        commentCount++
+      }
+    }
+    setSingleLineComments(commentCount)
+  }
+
+  const countMultiLineComments = (javaCode) => {
+    const commentRegex = /\/\*[\s\S]*?\*\//g
+    const comments = javaCode.match(commentRegex)
+    const commentCount = comments ? comments.length : 0
+
+    setMultiLineComment(commentCount)
+  }
+
+  const countClasses = (codeToCount) => {
+    const lines = codeToCount.split('\n')
+    let classCount = 0
+
+    for (const line of lines) {
+      const trimmedLine = line.trim()
+
+      // Check if the line starts with "class" followed by a valid class name
+      if (
+        trimmedLine.match(/^class\s+[A-Za-z_$][A-Za-z0-9_$]*\s*\{/) ||
+        line.includes('class')
+      ) {
+        classCount++
+      }
+    }
+
+    setClasses(classCount)
+  }
+
+  const countMethods = (codeToCount) => {
+    const lines = codeToCount.split('\n')
+    let methodCount = 0
+    let insideMethod = false
+
+    for (const line of lines) {
+      const trimmedLine = line.trim()
+
+      // Check if the line starts with a valid method signature
+      if (
+        trimmedLine.match(/^[A-Za-z_$][A-Za-z0-9_$]*\s*\([^)]*\)\s*\{/) ||
+        line.includes('void')
+      ) {
+        methodCount++
+        insideMethod = true
+      } else if (insideMethod && trimmedLine.endsWith('}')) {
+        insideMethod = false
+      }
+    }
+
+    setMethods(methodCount)
+  }
+
+  const countWhileLoops = (codeToCount) => {
+    const lines = codeToCount.split('\n')
+    let whileLoopCount = 0
+
+    for (const line of lines) {
+      // Check if the line contains a 'while' loop statement
+      if (line.includes('while')) {
+        whileLoopCount++
+      }
+    }
+
+    setWhileLoops(whileLoopCount)
+  }
+
+  const countForLoops = (codeToCount) => {
+    const lines = codeToCount.split('\n')
+    let forLoopCount = 0
+
+    for (const line of lines) {
+      // Check if the line contains a 'for' loop statement
+      if (line.includes('for')) {
+        forLoopCount++
+      }
+    }
+
+    setForLoops(forLoopCount)
+  }
+
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value)
   }
@@ -91,7 +200,12 @@ function Home() {
             <label>
               Select Option:
               <select value={selectedOption} onChange={handleOptionChange}>
-                <option value='codeCount'>Code Count</option>
+                <option value='singleLineComments'>Single Line Comment</option>
+                <option value='multiLineComments'>Multi Line Comments</option>
+                <option value='classes'>Classes</option>
+                <option value='methods'>Methods </option>
+                <option value='whileLoops'>While Loops </option>
+                <option value='forLoops'>For Loops </option>
                 <option value='codeLine'>Code Line</option>
                 <option value='ifElseCount'>If-Else Count</option>
               </select>

@@ -1,0 +1,41 @@
+/* Add this CSS to your stylesheet */
+.App {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-open .content {
+  margin-left: 250px; /* Adjust the width of the sidebar as needed */
+  transition: margin-left 0.3s ease;
+}
+
+.navbar-nav.flex-column {
+  width: 250px; /* Adjust the width of the sidebar as needed */
+  background-color: #333; /* Sidebar background color */
+  padding-top: 20px;
+  height: 100vh; /* Make the sidebar full height */
+  position: fixed;
+  top: 0;
+  left: -250px; /* Initially hide the sidebar */
+  transition: left 0.3s ease;
+}
+
+.nav-open .navbar-nav.flex-column {
+  left: 0; /* Show the sidebar when nav-open class is added */
+}
+
+.navbar-brand {
+  color: #fff;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.nav-link {
+  color: #fff;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  background-color: #555; /* Highlight on hover */
+}

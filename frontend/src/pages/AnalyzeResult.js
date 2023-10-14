@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import './AnalyzeResult.css'
 import CodeEditor from '@monaco-editor/react'
 import { PieChart, Pie, Cell } from 'recharts'
@@ -26,15 +26,31 @@ function AnalyzeResult() {
   const [codeCount, setCodeCount] = useState(0)
   const [codeLine, setCodeLine] = useState(0)
   const [ifElseCount, setIfElseCount] = useState(0)
+  const [singleLineComments, setSingleLineComments] = useState(0)
+  const [multiLineComments, setMultiLineComment] = useState(0)
+  const [methods, setMethods] = useState(0)
+  const [whileLoops, setWhileLoops] = useState(0)
+  const [forLoops, setForLoops] = useState(0)
+  const [classes, setClasses] = useState(0)
   const [userInput, setUserInput] = useState(0) // User input value
   const [selectedOption, setSelectedOption] = useState('codeCount')
   const [exceededMessage, setExceededMessage] = useState('')
+  const componentRef = useRef()
 
   useEffect(() => {
     // Retrieve values from local storage
     const storedCode = localStorage.getItem('code')
     const storedCodeCount = parseInt(localStorage.getItem('codeCount'), 10) || 0 // the 10 is decimal here
     const storedCodeLine = parseInt(localStorage.getItem('codeLine'), 10) || 0
+    const storedMethods = parseInt(localStorage.getItem('methods'), 10) || 0
+    const storedWhileLoops =
+      parseInt(localStorage.getItem('whileLoops'), 10) || 0
+    const storedForLoops = parseInt(localStorage.getItem('forLoops'), 10) || 0
+    const storedSingleLineComments =
+      parseInt(localStorage.getItem('singleLineComments'), 10) || 0
+    const storedMultiLineComment =
+      parseInt(localStorage.getItem('multiLineComments'), 10) || 0
+    const storedClasses = parseInt(localStorage.getItem('classes'), 10) || 0
     const storedIfElseCount =
       parseInt(localStorage.getItem('ifElseCount'), 10) || 0
     const storedUserInput = parseInt(localStorage.getItem('userInput'), 10) || 0 // Parse as an integer
@@ -45,6 +61,12 @@ function AnalyzeResult() {
     setCodeCount(storedCodeCount)
     setCodeLine(storedCodeLine)
     setIfElseCount(storedIfElseCount)
+    setSingleLineComments(storedSingleLineComments)
+    setMultiLineComment(storedMultiLineComment)
+    setMethods(storedMethods)
+    setWhileLoops(storedWhileLoops)
+    setForLoops(storedForLoops)
+    setClasses(storedClasses)
     setUserInput(storedUserInput)
     setSelectedOption(storedSelectedOption) // Set selected option from local storage
   }, [])
@@ -62,10 +84,40 @@ function AnalyzeResult() {
       setExceededMessage('Code Lines exceed the specified value')
     } else if (selectedOption === 'ifElseCount' && ifElseCount > userInput) {
       setExceededMessage('If-Else Count exceeds the specified value')
+    } else if (
+      selectedOption === 'singleLineComments' &&
+      singleLineComments > userInput
+    ) {
+      setExceededMessage('Single Line Comments exceeds the specified value')
+    } else if (
+      selectedOption === 'multiLineComments' &&
+      multiLineComments > userInput
+    ) {
+      setExceededMessage('Multi Line Comments exceeds the specified value')
+    } else if (selectedOption === 'classes' && classes > userInput) {
+      setExceededMessage('Classes exceeds the specified value')
+    } else if (selectedOption === 'methods' && methods > userInput) {
+      setExceededMessage('Methods exceeds the specified value')
+    } else if (selectedOption === 'whileLoops' && whileLoops > userInput) {
+      setExceededMessage('While Loops exceeds the specified value')
+    } else if (selectedOption === 'forLoops' && forLoops > userInput) {
+      setExceededMessage('For Loops exceeds the specified value')
     } else {
       setExceededMessage('')
     }
-  }, [codeCount, codeLine, ifElseCount, selectedOption, userInput])
+  }, [
+    codeCount,
+    codeLine,
+    ifElseCount,
+    singleLineComments,
+    multiLineComments,
+    selectedOption,
+    userInput,
+    classes,
+    forLoops,
+    whileLoops,
+    methods,
+  ])
 
   // Define PDF styles inline
   const pdfStyles = StyleSheet.create({
@@ -143,9 +195,14 @@ function AnalyzeResult() {
   })
 
   const data = [
-    { name: 'Code Count', value: codeCount },
+    { name: 'Single Line', value: singleLineComments },
+    { name: 'Multi Lines', value: multiLineComments },
     { name: 'Code Line', value: codeLine },
     { name: 'If else count', value: ifElseCount },
+    { name: 'Classes', value: classes },
+    { name: 'Methods', value: methods },
+    { name: 'For Loops', value: forLoops },
+    { name: 'While Loops', value: whileLoops },
   ]
 
   // Define custom colors for your charts
@@ -192,28 +249,75 @@ function AnalyzeResult() {
       </BarChart>
     )
   }
+
   return (
-    <div className='analyze-result-container'>
-      <h2 className='analyze-result-heading'>Code Analysis Report</h2>
+    <div className='analyze-result-container' ref={componentRef}>
       <div className='code-editor'>
+        <h2 className='analyze-result-heading'>Code Analysis Report</h2>
         <CodeEditor
           language='java'
           value={code}
-          height='500px'
-          width='600px'
+          height='300px'
+          width='913px'
           options={{ readOnly: true }}
         />
+        <BarChart
+          width={1000}
+          height={300}
+          data={data}
+          margin={{
+            top: 5,
+            right: 200,
+            left: 0,
+            bottom: 10,
+          }}
+          barSize={30}
+        >
+          <XAxis
+            dataKey='name'
+            scale='point'
+            padding={{ left: 16, right: 10 }}
+          />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <CartesianGrid strokeDasharray='3 3' />
+          <Bar dataKey='value' background={{ fill: '#eee' }}>
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={colors[index % colors.length]}
+              />
+            ))}
+          </Bar>
+        </BarChart>
       </div>
+
       <div className='result-details'>
         <p>User Input Value: {userInput}</p>
         {exceededMessage && (
           <p className='exceeded-message'>{exceededMessage}</p>
         )}
-        <p className={isExceeded(codeCount) ? 'exceeded' : ''}>
-          Code Count: {codeCount}
+        <p className={isExceeded(singleLineComments) ? 'exceeded' : ''}>
+          single LineComments: {singleLineComments}
+        </p>
+        <p className={isExceeded(multiLineComments) ? 'exceeded' : ''}>
+          Multi Line Comments: {multiLineComments}
         </p>
         <p className={isExceeded(codeLine) ? 'exceeded' : ''}>
           Code Lines: {codeLine}
+        </p>
+        <p className={isExceeded(classes) ? 'exceeded' : ''}>
+          Classes: {classes}
+        </p>
+        <p className={isExceeded(methods) ? 'exceeded' : ''}>
+          Methods: {methods}
+        </p>
+        <p className={isExceeded(whileLoops) ? 'exceeded' : ''}>
+          While Loops: {whileLoops}
+        </p>
+        <p className={isExceeded(forLoops) ? 'exceeded' : ''}>
+          For Loops: {forLoops}
         </p>
         <p className={isExceeded(ifElseCount) ? 'exceeded' : ''}>
           If-Else Count: {ifElseCount}
@@ -237,36 +341,7 @@ function AnalyzeResult() {
           </Pie>
         </PieChart>
         {/* // Style and colorize the BarChart */}
-        <BarChart
-          width={400}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-          barSize={20}
-        >
-          <XAxis
-            dataKey='name'
-            scale='point'
-            padding={{ left: 10, right: 10 }}
-          />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <CartesianGrid strokeDasharray='3 3' />
-          <Bar dataKey='value' background={{ fill: '#eee' }}>
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={colors[index % colors.length]}
-              />
-            ))}
-          </Bar>
-        </BarChart>
+
         {/* PDF download button */}
         <PDFDownloadLink
           document={
@@ -286,15 +361,21 @@ function AnalyzeResult() {
                       </Text>
                     </View>
                   )}
-                  <Text style={pdfStyles.label}>Code Count: {codeCount}</Text>
+                  <Text style={pdfStyles.label}>
+                    Single Line Comments: {singleLineComments}
+                  </Text>
                   <Text style={pdfStyles.label}>Code Lines: {codeLine}</Text>
                   <Text style={pdfStyles.label}>
                     If-Else Count: {ifElseCount}
                   </Text>
 
-                  {/* Include the PieChart and BarChart SVGs */}
+                  {/* Include the PieChart SVG */}
                   <View style={pdfStyles.chartContainer}>
                     {generatePieChartSVG(data)}
+                  </View>
+
+                  {/* Include the BarChart SVG */}
+                  <View style={pdfStyles.chartContainer}>
                     {generateBarChartSVG(data)}
                   </View>
                 </View>
