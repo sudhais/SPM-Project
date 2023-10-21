@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import CodeEditor from '@monaco-editor/react'
 import '../App.css'
+<<<<<<< HEAD
 import { Link } from 'react-router-dom'
+=======
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
+>>>>>>> all
 
 function Home() {
   const [code, setCode] = useState('')
@@ -16,6 +21,12 @@ function Home() {
   const [forLoops, setForLoops] = useState(0)
   const [selectedOption, setSelectedOption] = useState('singleLineComments')
   const [userInput, setUserInput] = useState('')
+<<<<<<< HEAD
+=======
+  const [result, setResult] = useState('')
+
+  const navigate = useNavigate();
+>>>>>>> all
 
   useEffect(() => {
     // Update if-else count whenever code changes
@@ -27,13 +38,22 @@ function Home() {
     countWhileLoops(code)
     countForLoops(code)
   }, [code])
+<<<<<<< HEAD
+=======
+  console.log(code);
+>>>>>>> all
 
   const handleCodeChange = (value) => {
     setCode(value)
     setCodeCount(value.length)
     const linesOfCode = value
+<<<<<<< HEAD
       .split('\n')
       .filter((line) => line.trim() !== '').length
+=======
+      .split('\n').length;
+      // .filter((line) => line.trim() !== '').length
+>>>>>>> all
     setCodeLine(linesOfCode)
   }
 
@@ -51,7 +71,26 @@ function Home() {
     localStorage.setItem('classes', classes)
     localStorage.setItem('selectedOption', selectedOption)
     localStorage.setItem('userInput', userInput)
+<<<<<<< HEAD
   }
+=======
+
+    axios.post('http://localhost:8000/analyze-code', { code })
+      .then((response) => {
+        setResult(response.data);
+        console.log(response.data);
+        const objStr = JSON.stringify(response.data);
+        localStorage.setItem('result', objStr);
+        console.log(result);
+        navigate('/analyzeResult');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      
+
+    }
+>>>>>>> all
 
   const countIfElseStatements = (codeToCount) => {
     // Split code into lines
@@ -221,6 +260,7 @@ function Home() {
           </div>
 
           <Link
+<<<<<<< HEAD
             to={{
               pathname: '/analyzeResult',
               state: {
@@ -228,6 +268,16 @@ function Home() {
                 userInput: userInput,
               },
             }}
+=======
+            // to={{
+            //   pathname: '/analyzeResult',
+            //   state: {
+            //     selectedOption: selectedOption,
+            //     userInput: userInput,
+            //   },
+            // }}
+            // state={handleAnalyzeClick}
+>>>>>>> all
             onClick={handleAnalyzeClick}
           >
             <button className='analyze-button'>Analyze</button>

@@ -1,0 +1,49 @@
+/* HistoryTable.css */
+
+.driver-details {
+  padding: 20px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.text-primary {
+  color: #00796b; /* Dark teal color for text */
+}
+
+table.table-bordered {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  background-color: #fff; /* White background for the table */
+}
+
+table.table-bordered th,
+table.table-bordered td {
+  border: 1px solid #ccc;
+  padding: 12px;
+  text-align: center;
+}
+
+table.table-bordered th {
+  background-color: #00796b; /* Dark teal color for table headers */
+  color: #fff; /* White text for table headers */
+}
+
+.btn-danger {
+  background-color: #f44336; /* Red color for the delete button */
+  border-color: #f44336;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+.btn-danger:hover {
+  background-color: #d32f2f; /* Darker red on hover */
+  border-color: #d32f2f;
+}
+
+.input-group{
+  margin-top: 15px;
+}

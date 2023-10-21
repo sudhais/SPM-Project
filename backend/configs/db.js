@@ -1,4 +1,4 @@
-const { default: mongoose } = require('mongoose');
+import { default as mongoose } from 'mongoose';
 
 const conndb = ()=>{
   mongoose.connect(process.env.MONG_URI, {
@@ -11,4 +11,4 @@ const conndb = ()=>{
   })
 }
 
-module.exports = conndb;
+export default conndb;
