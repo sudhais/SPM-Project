@@ -83,32 +83,8 @@ function AnalyzeResult() {
     setClasses(storedClasses)
     setUserInput(storedUserInput)
     setSelectedOption(storedSelectedOption)
-    setResult(storedResult) // Set selected option from local storage
-    // console.log(storeduserID);
-    // console.log(storedResult);
-
-  //   const getAllData =  ()=>{
-  //      axios.post('http://localhost:8000/analyze-code', { code })
-  //    .then((response) => {
-  //      var test = response.data;
-  //      // setResult(test);
-  //      // console.log(response.data);
-  //      // const objStr = JSON.stringify(response.data);
-  //      // localStorage.setItem('result', objStr);
-  //      console.log(test);
-  //    })
-  //    .catch((error) => {
-  //      console.error(error);
-  //    });
-  //  }
-
-  //  getAllData()
-
-    
-      
-
-    // console.log(result);
-
+    // setResult(storedResult) // Set selected option from local storage
+    console.log(storedUserInput);
     var graph = {
       userInput:userInput,
       singleLine: singleLineComments,
@@ -145,11 +121,24 @@ function AnalyzeResult() {
       userID:storeduserID,
       reports:reports,
       value:codes.icb,
-      graphData:graph}
+      graphData:graph
+    }
     setResult(details)
     console.log(details);
 
-  }, [])
+  },[
+    codeCount,
+    codeLine,
+    ifElseCount,
+    singleLineComments,
+    multiLineComments,
+    selectedOption,
+    userInput,
+    classes,
+    forLoops,
+    whileLoops,
+    methods,
+  ])
 
   // Define a function to determine if a value exceeds the user input
   const isExceeded = (value) => {
