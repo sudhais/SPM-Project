@@ -7,6 +7,7 @@ const detailsSchema = new Schema({
     trim: true,
     maxLength : [20,"user ID cannot exceed 20 characters"]
   },
+  projName: String,
   reports: [{
     class: String,
     method: String,
@@ -24,7 +25,20 @@ const detailsSchema = new Schema({
     type: Number,
     required : [true, "Please enter ICB value"],
     trim: true
-  }
+  },
+  graphData:{
+    userInput:Number,
+    singleLine: Number,
+    multiLine: Number,
+    codeLine: Number,
+    classes: Number,
+    methods: Number,
+    whileLoops: Number,
+    forLoops: Number,
+    ifElseCount: Number
+  },
+  date:String
+  
 
   // reports:[
   //   [{

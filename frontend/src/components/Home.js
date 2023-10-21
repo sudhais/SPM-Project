@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import CodeEditor from '@monaco-editor/react'
 import '../App.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 function Home() {
@@ -17,7 +17,9 @@ function Home() {
   const [forLoops, setForLoops] = useState(0)
   const [selectedOption, setSelectedOption] = useState('singleLineComments')
   const [userInput, setUserInput] = useState('')
-  const [result, setResult] = useState([]);
+  const [result, setResult] = useState('')
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Update if-else count whenever code changes
@@ -29,13 +31,14 @@ function Home() {
     countWhileLoops(code)
     countForLoops(code)
   }, [code])
+  console.log(code);
 
   const handleCodeChange = (value) => {
     setCode(value)
     setCodeCount(value.length)
     const linesOfCode = value
-      .split('\n')
-      .filter((line) => line.trim() !== '').length
+      .split('\n').length;
+      // .filter((line) => line.trim() !== '').length
     setCodeLine(linesOfCode)
   }
 
@@ -57,15 +60,18 @@ function Home() {
     axios.post('http://localhost:8000/analyze-code', { code })
       .then((response) => {
         setResult(response.data);
-        console.log(result);
         console.log(response.data);
-        localStorage.setItem('result',result)
+        const objStr = JSON.stringify(response.data);
+        localStorage.setItem('result', objStr);
+        console.log(result);
+        navigate('/analyzeResult');
       })
       .catch((error) => {
         console.error(error);
       });
-    
-  }
+      
+
+    }
 
   const countIfElseStatements = (codeToCount) => {
     // Split code into lines
@@ -235,13 +241,14 @@ function Home() {
           </div>
 
           <Link
-            to={{
-              pathname: '/analyzeResult',
-              state: {
-                selectedOption: selectedOption,
-                userInput: userInput,
-              },
-            }}
+            // to={{
+            //   pathname: '/analyzeResult',
+            //   state: {
+            //     selectedOption: selectedOption,
+            //     userInput: userInput,
+            //   },
+            // }}
+            // state={handleAnalyzeClick}
             onClick={handleAnalyzeClick}
           >
             <button className='analyze-button'>Analyze</button>

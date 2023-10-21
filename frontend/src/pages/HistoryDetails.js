@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation} from "react-router-dom"
 import './AnalyzeResult.css'
-import CodeEditor from '@monaco-editor/react'
 import { PieChart, Pie, Cell } from 'recharts'
 import {
   BarChart,
@@ -12,7 +11,6 @@ import {
   Tooltip,
   Legend,
 } from 'recharts'
-import axios from "axios";
 import {
   PDFDownloadLink,
   Page,
@@ -23,7 +21,7 @@ import {
 } from '@react-pdf/renderer'
 import { Button } from 'antd'
 
-function AnalyzeResult() {
+function HistoryDetails() {
   const [code, setCode] = useState('')
   const [codeCount, setCodeCount] = useState(0)
   const [codeLine, setCodeLine] = useState(0)
@@ -37,19 +35,15 @@ function AnalyzeResult() {
   const [userInput, setUserInput] = useState(0) // User input value
   const [selectedOption, setSelectedOption] = useState('codeCount')
   const [exceededMessage, setExceededMessage] = useState('')
-  const [result, setResult] = useState('');
   const componentRef = useRef()
-  // const [graphData, setGraphData] = useState('');
   const [finalData, setFinalData] = useState('');
 
+  const location = useLocation();
+  const retrievedData = location.state;
+  console.log(retrievedData);
 
   useEffect(() => {
-
-    
-    
     // Retrieve values from local storage
-    const storedCode = localStorage.getItem('code')
-    const storedCodeCount = parseInt(localStorage.getItem('codeCount'), 10) || 0 // the 10 is decimal here
     const storedCodeLine = parseInt(localStorage.getItem('codeLine'), 10) || 0
     const storedMethods = parseInt(localStorage.getItem('methods'), 10) || 0
     const storedWhileLoops =
@@ -65,14 +59,11 @@ function AnalyzeResult() {
     const storedUserInput = parseInt(localStorage.getItem('userInput'), 10) || 0 // Parse as an integer
     const storedSelectedOption =
       localStorage.getItem('selectedOption') || 'codeCount'
-    
-    const storedResult = localStorage.getItem('result');
-    var codes = JSON.parse(storedResult);
-    const storeduserID = localStorage.getItem('userID') // Get selected option from local storage
+  
+  // Get selected option from local storage
 
+    setFinalData(retrievedData)
 
-    setCode(storedCode)
-    setCodeCount(storedCodeCount)
     setCodeLine(storedCodeLine)
     setIfElseCount(storedIfElseCount)
     setSingleLineComments(storedSingleLineComments)
@@ -83,72 +74,6 @@ function AnalyzeResult() {
     setClasses(storedClasses)
     setUserInput(storedUserInput)
     setSelectedOption(storedSelectedOption)
-    setResult(storedResult) // Set selected option from local storage
-    // console.log(storeduserID);
-    // console.log(storedResult);
-
-  //   const getAllData =  ()=>{
-  //      axios.post('http://localhost:8000/analyze-code', { code })
-  //    .then((response) => {
-  //      var test = response.data;
-  //      // setResult(test);
-  //      // console.log(response.data);
-  //      // const objStr = JSON.stringify(response.data);
-  //      // localStorage.setItem('result', objStr);
-  //      console.log(test);
-  //    })
-  //    .catch((error) => {
-  //      console.error(error);
-  //    });
-  //  }
-
-  //  getAllData()
-
-    
-      
-
-    // console.log(result);
-
-    var graph = {
-      userInput:userInput,
-      singleLine: singleLineComments,
-      multiLine: multiLineComments,
-      codeLine: codeLine,
-      classes: classes,
-      methods: methods,
-      whileLoops: whileLoops,
-      forLoops: forLoops,
-      ifElseCount: ifElseCount
-    }
-
-    var reports =[];
-
-    var line = 1;
-    codes.code.map((val)=>{
-      var lineName = val.line.split("\r")[0]
-      reports = [...reports,{
-        class:val.metric.className,
-        method:val.metric.methodName,
-        lineNo:line,
-        statement:lineName,
-        size:val.metric.sizeFactor,
-        nested:val.metric.nestedLevelOfControlStructure,
-        inheritence:val.metric.inheritanceLevelOfStatement,
-        control:val.metric.typeOfControlStructure,
-        total:val.metric.totalWeight,
-        multiply:val.metric.wc
-      }]
-      line += 1
-    })
-    // setReportsData(reports)
-    var details = {
-      userID:storeduserID,
-      reports:reports,
-      value:codes.icb,
-      graphData:graph}
-    setResult(details)
-    console.log(details);
-
   }, [])
 
   // Define a function to determine if a value exceeds the user input
@@ -185,20 +110,7 @@ function AnalyzeResult() {
     } else {
       setExceededMessage('')
     }
-  }, [
-    codeCount,
-    codeLine,
-    ifElseCount,
-    singleLineComments,
-    multiLineComments,
-    selectedOption,
-    userInput,
-    classes,
-    forLoops,
-    whileLoops,
-    methods,
-  ])
-  // console.log(result);
+  }, [])
 
   // Define PDF styles inline
   const pdfStyles = StyleSheet.create({
@@ -287,39 +199,7 @@ function AnalyzeResult() {
   ]
 
 
-  function handleSave() {
-    // Display a prompt and store the project name
-    const userInput1 = prompt("Please enter your project name:");
 
-    // Check if the user entered something and display it
-    if (userInput1 !== null) {
-
-      const date = new Date();
-      const formattedDate = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(date);
-      
-      var finalDataResult = {
-        userID: result.userID,
-        projName: userInput1,
-        reports: result.reports,
-        value: result.value,
-        graphData: result.graphData,
-        date: formattedDate
-      }
-      setFinalData(finalDataResult);
-      // console.log(finalData);
-      axios.post("http://localhost:8000/api/details/new", finalDataResult)
-      .then((res)=>{
-          alert(`${userInput1} successfully saved`)
-      })
-      
-    } else {
-      alert("You canceled the prompt.");
-    }
-  }
 
   // Define custom colors for your charts
   const colors = ['#FF6633', '#FFB399', '#FF33FF']
@@ -371,13 +251,6 @@ function AnalyzeResult() {
     <div className='analyze-result-container' ref={componentRef}>
       <div className='code-editor'>
         <h2 className='analyze-result-heading'>Code Analysis Report</h2>
-        <CodeEditor
-          language='java'
-          value={code}
-          height='300px'
-          width='913px'
-          options={{ readOnly: true }}
-        />
         <BarChart
           width={1000}
           height={300}
@@ -526,8 +399,8 @@ function AnalyzeResult() {
           </tr>
         </thead>
         <tbody>
-          {result.reports &&
-            result.reports.map((val, index) => (
+          {finalData.reports &&
+            finalData.reports.map((val, index) => (
               <tr key={index}>
                 <td>{val.class}</td>
                 <td>{val.method}</td>
@@ -550,17 +423,16 @@ function AnalyzeResult() {
             <td></td>
             <td></td>
             <td></td>
-            <th scope="row">{result.value}</th></tr>
+            <th scope="row">{finalData.value}</th></tr>
         </tbody>
       </table>
     
       <center>
-        <button type="button" className="btn btn-primary" onClick={()=> handleSave()} >Save</button>
-        <button type="button" className="btn btn-danger">Cancel</button>
+        <button type="button" className="btn btn-danger">Back</button>
       </center>
     </div>
     
   )
 }
 
-export default AnalyzeResult
+export default HistoryDetails

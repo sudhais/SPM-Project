@@ -14,6 +14,8 @@ import Login from "./pages/Login";
 
 import SideNavBar from './components/SideBar'
 import AnalyzeResult from './pages/AnalyzeResult'
+import HistoryHome from './pages/HistoryHome';
+import HistoryDetails from './pages/HistoryDetails'
 
 function App() {
 
@@ -31,8 +33,10 @@ function App() {
         <Route path='/register' element={<Register/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/home' Component={Home}></Route>
-        <Route path='/history' element={<History/>} ></Route>
+        <Route path='/history' element={<HistoryHome/>}></Route>
+        <Route path='/history/details' element={<HistoryDetails/>}></Route>
         <Route path='/analyzeResult' element={<AnalyzeResult />}></Route>
+
       </Routes>
     </BrowserRouter>
     

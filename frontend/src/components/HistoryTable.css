@@ -43,3 +43,7 @@ table.table-bordered th {
   background-color: #d32f2f; /* Darker red on hover */
   border-color: #d32f2f;
 }
+
+.input-group{
+  margin-top: 15px;
+}

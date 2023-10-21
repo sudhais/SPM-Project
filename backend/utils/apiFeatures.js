@@ -13,7 +13,7 @@ class ApiFeatures{
     }:{};
 
     let keyword1 = this.queryStr.keyword1 ?{
-      "reports.class":{
+      projName:{
         $regex: this.queryStr.keyword1,
         $options: 'i'
       }    

@@ -32,7 +32,7 @@ export async function getAllDetails(req,res) {
 
   try {
     // console.log(req.query.keyword1);
-    const apiFeatures = new ApiFeatures(Details.find().sort({userID:-1}), req.query).search()
+    const apiFeatures = new ApiFeatures(Details.find().sort({projName:-1}), req.query).search()
     const details = await apiFeatures.query;
 
     if(!details) {

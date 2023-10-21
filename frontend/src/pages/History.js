@@ -18,13 +18,13 @@ const History = ()=> {
       .then((res)=>{
         const json = res.data;
         setDetails(json.details);
+        // console.log(res);
       })
       .catch((err=>console.log(err)))
     }
 
     getAllDetails();
   },[search])
-  // console.log(details[1]);
 
 
   function handleDelete(id) {
@@ -64,11 +64,11 @@ const History = ()=> {
       {/* <input type="text" placeholder="Search here" onChange={(e)=>setSearch(e.target.value)}/> */}
       <input type="text" placeholder="Search here" onChange={(e)=>setSearch(e.target.value)}/>
       <button >Search</button>
-        {details && details.map((val1 , index)=> (
+        {details && details.map((val1 , index1)=> (
           // <HistoryTable key={index} details={val} />
-          <div className="driver-details">
+          <div className="driver-details" >
       {/* <h4 className="text-primary">{details.userID}</h4> */}
-      <table className="table table-bordered" key={index}>
+      <table className="table table-bordered" key={index1}>
         <thead>
           <tr>
             <th scope="col">Class Name</th>

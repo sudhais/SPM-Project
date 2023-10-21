@@ -76,6 +76,7 @@ export const getAllTransection = async (req, res) => {
       userid: req.body.userid,
       ...(type !== "all" && { type }),
     });
+    console.log(transections);
     res.status(200).json(transections);
   } catch (error) {
     console.log(error);

@@ -90,6 +90,7 @@ const HomePage = () => {
           type,
         });
         setAllTransection(res.data);
+        console.log(res.data);
         setLoading(false);
       } catch (error) {
         message.error("Fetch Issue With Tranction");

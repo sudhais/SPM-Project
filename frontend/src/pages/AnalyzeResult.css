@@ -130,3 +130,9 @@
   width: 300px; /* Adjust the width as needed */
   height: 300px; /* Adjust the height as needed */
 }
+
+
+.btn{
+  margin-right: 10px;
+  margin-bottom:30px;
+}
