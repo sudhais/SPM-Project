@@ -46,19 +46,15 @@ function HistoryDetails() {
 
   useEffect(() => {
     // Retrieve values from local storage
-    const storedCodeLine = parseInt(localStorage.getItem('codeLine'), 10) || 0
-    const storedMethods = parseInt(localStorage.getItem('methods'), 10) || 0
-    const storedWhileLoops =
-      parseInt(localStorage.getItem('whileLoops'), 10) || 0
-    const storedForLoops = parseInt(localStorage.getItem('forLoops'), 10) || 0
-    const storedSingleLineComments =
-      parseInt(localStorage.getItem('singleLineComments'), 10) || 0
-    const storedMultiLineComment =
-      parseInt(localStorage.getItem('multiLineComments'), 10) || 0
-    const storedClasses = parseInt(localStorage.getItem('classes'), 10) || 0
-    const storedIfElseCount =
-      parseInt(localStorage.getItem('ifElseCount'), 10) || 0
-    const storedUserInput = parseInt(localStorage.getItem('userInput'), 10) || 0 // Parse as an integer
+    const storedCodeLine = retrievedData.graphData.codeLine
+    const storedMethods = retrievedData.graphData.methods
+    const storedWhileLoops = retrievedData.graphData.whileLoops
+    const storedForLoops =  retrievedData.graphData.forLoops
+    const storedSingleLineComments = retrievedData.graphData.singleLine
+    const storedMultiLineComment =retrievedData.graphData.multiLine
+    const storedClasses = retrievedData.graphData.classes
+    const storedIfElseCount =retrievedData.graphData.ifElseCount
+    const storedUserInput = retrievedData.graphData.userInput
     const storedSelectedOption =
       localStorage.getItem('selectedOption') || 'codeCount'
   
