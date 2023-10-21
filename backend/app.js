@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 import morgan from 'morgan';
 import express, { json } from 'express';
 import color from 'colors';
-config({path:join('C:\\Users\\DELL\\Desktop\\assignment\\spm\\project\\SPM-Project\\backend', 'configs/config.env')});
+config({path:join('./configs/config.env')});
 import cors from 'cors';
 import connect from './utils/database.connection.js';
 

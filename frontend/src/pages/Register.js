@@ -33,6 +33,7 @@ useEffect(() => {
         <>
            <div className="register-page">
             {loading && <Spinner />}
+            <div className="row container">
               <Form layout="vertical" onFinish={submitHandler}>
                 <h1>Register Form</h1>
                 <Form.Item label="Name" name="name">
@@ -49,6 +50,7 @@ useEffect(() => {
                     <button className="btn btn-primary">Register</button>
                 </div>
               </Form>
+            </div>
            </div>
         </>
     );

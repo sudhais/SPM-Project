@@ -8,8 +8,9 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 850px;
+  margin: 100px auto;
+
 }
 
 .title {
@@ -40,4 +41,8 @@
 
 .analyze-button:hover {
   background-color: #0056b3;
+}
+
+.login-page .container{
+  max-width: 500px;
 }

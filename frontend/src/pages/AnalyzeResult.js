@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import './AnalyzeResult.css'
 import CodeEditor from '@monaco-editor/react'
 import { PieChart, Pie, Cell } from 'recharts'
@@ -545,7 +545,7 @@ function AnalyzeResult() {
     
       <center>
         <button type="button" className="btn btn-primary" onClick={()=> handleSave()} >Save</button>
-        <button type="button" className="btn btn-danger">Cancel</button>
+        <Link to={"/home"}><button type="button" className="btn btn-danger">Cancel</button></Link>
       </center>
     </div>
     

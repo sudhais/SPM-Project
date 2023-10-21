@@ -91,10 +91,10 @@ const Login = () => {
   }, [navigate]);
   return (
     <>
-      <div className="login-page ">
+      <div className="login-page">
         {loading && <Spinner />}
         <div className="row container">
-          <div className="col-md-3 login-form">
+          <div className="login-form">
             <Form layout="vertical" onFinish={submitHandler}>
               <h1>Login Form</h1>
               <Form.Item label="Email" name="email">
