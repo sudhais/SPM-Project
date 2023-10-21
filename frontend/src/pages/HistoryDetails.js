@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { useLocation} from "react-router-dom"
+import { useNavigate,useLocation, Link } from 'react-router-dom'
 import './AnalyzeResult.css'
 import { PieChart, Pie, Cell } from 'recharts'
 import {
@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
 } from 'recharts'
+import axios from 'axios'
 import {
   PDFDownloadLink,
   Page,
@@ -41,6 +42,7 @@ function HistoryDetails() {
   const location = useLocation();
   const retrievedData = location.state;
   console.log(retrievedData);
+  const navigate = useNavigate()
 
   useEffect(() => {
     // Retrieve values from local storage
@@ -111,6 +113,17 @@ function HistoryDetails() {
       setExceededMessage('')
     }
   }, [])
+
+  function handleDelete(id) {
+    try {
+      axios.delete(`http://localhost:8000/api/details/${id}`)
+      .then((res=>{
+        navigate('/history')
+      }))
+    } catch (error) {
+      console.error('Error deleting file:', error);
+    }
+  };
 
   // Define PDF styles inline
   const pdfStyles = StyleSheet.create({
@@ -428,7 +441,8 @@ function HistoryDetails() {
       </table>
     
       <center>
-        <button type="button" className="btn btn-danger">Back</button>
+        <Link to={"/history"}><button type="button" className="btn btn-primary">Back</button></Link>
+        <button type="button" className="btn btn-danger" onClick={() => handleDelete(finalData._id)}>Delete</button>
       </center>
     </div>
     

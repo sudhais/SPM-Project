@@ -14,6 +14,7 @@ import Analytics from "../components/Analytics";
 import { PDFViewer } from "@react-pdf/renderer";
 import MyPDFDocument from "../components/MyPDFDocument.js";
 import ReportGenerator from "../components/ReportGenerator";
+import { useNavigate } from "react-router-dom";
 const { RangePicker } = DatePicker;
 
 const HomePage = () => {
@@ -30,7 +31,7 @@ const HomePage = () => {
     setShowReport(true);
   };
 
-  
+  const navigate = useNavigate();
   //table data
   const columns = [
     {
@@ -79,25 +80,28 @@ const HomePage = () => {
 
   //useEffect Hook
   useEffect(() => {
-    const getAllTransactions = async () => {
-      try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        setLoading(true);
-        const res = await axios.post("http://localhost:8000/api/v1/transections/get-transection", {
-          userid: user._id,
-          frequency,
-          selectedDate,
-          type,
-        });
-        setAllTransection(res.data);
-        console.log(res.data);
-        setLoading(false);
-      } catch (error) {
-        message.error("Fetch Issue With Tranction");
-      }
-    };
+    
     getAllTransactions();
-  }, [frequency, selectedDate, type, setAllTransection]);
+  }, [frequency, selectedDate, type]);
+
+  const getAllTransactions = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      console.log(user, frequency, selectedDate, type);
+      setLoading(true);
+      const res = await axios.post("http://localhost:8000/api/v1/transections/get-transection", {
+        userid: user._id,
+        frequency,
+        selectedDate,
+        type,
+      });
+      setAllTransection(res.data);
+      console.log(res.data);
+      setLoading(false);
+    } catch (error) {
+      message.error("Fetch Issue With Tranction");
+    }
+  };
 
   //delete handler
   const handleDelete = async (record) => {
@@ -108,6 +112,7 @@ const HomePage = () => {
       });
       setLoading(false);
       message.success("Transaction Deleted!");
+      getAllTransactions();
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -130,6 +135,7 @@ const HomePage = () => {
         });
         setLoading(false);
         message.success("Transaction Updated Successfully");
+        getAllTransactions();
       } else {
         await axios.post("http://localhost:8000/api/v1/transections/add-transection", {
           ...values,
@@ -140,6 +146,7 @@ const HomePage = () => {
       }
       setShowModal(false);
       setEditable(null);
+      getAllTransactions();
     } catch (error) {
       setLoading(false);
       message.error("Wrong Format");
