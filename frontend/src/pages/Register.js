@@ -46,7 +46,7 @@ useEffect(() => {
                     <Input type="password"/> 
                 </Form.Item>
                 <div className="d-flex justify-content-between">
-                    <Link to="/login">Already Register ? Click Here to Login </Link>
+                    <Link to="/login">Already registered ? Click here to login </Link>
                     <button className="btn btn-primary">Register</button>
                 </div>
               </Form>

@@ -56,13 +56,27 @@ export default function analyzeJavaCode(javaCode) {
       if(isBranchStatement(line)){
         stateReport.metric.typeOfControlStructure = 1;
         if (line.includes('&&') || line.includes('||')) {
-          stateReport.metric.typeOfControlStructure++;
+          let l = line;
+          l = line.split(' ');
+          for(let i = 0; i < l.length; i++){
+            console.log(l[i]);
+            if(l[i] == '&&' || l[i] == '||' ) {
+              stateReport.metric.typeOfControlStructure++;
+            }
+          }
+          
         }
       }
       if(isIterativeStatement(line)){
         stateReport.metric.typeOfControlStructure = 2;
         if (line.includes('&&') || line.includes('||')) {
-          stateReport.metric.typeOfControlStructure++;
+          let l = line;
+          l = line.split(' ');
+          for(let i = 0; i < l.length; i++){
+            if(l[i] == '&&' || l[i] == '||' ) {
+              stateReport.metric.typeOfControlStructure++;
+            }
+          }
         }
       }
       if(isSwitchStatement(line)){

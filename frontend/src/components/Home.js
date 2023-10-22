@@ -31,7 +31,6 @@ function Home() {
     countWhileLoops(code)
     countForLoops(code)
   }, [code])
-  console.log(code);
 
   const handleCodeChange = (value) => {
     setCode(value)
@@ -43,32 +42,37 @@ function Home() {
   }
 
   const handleAnalyzeClick = () => {
-    // Store codeCount, codeLine, ifElseCount, selectedOption, and userInput in local storage
-    localStorage.setItem('code', code)
-    localStorage.setItem('codeCount', codeCount)
-    localStorage.setItem('codeLine', codeLine)
-    localStorage.setItem('ifElseCount', ifElseCount)
-    localStorage.setItem('singleLineComments', singleLineComments)
-    localStorage.setItem('multiLineComments', multiLineComments)
-    localStorage.setItem('whileLoops', whileLoops)
-    localStorage.setItem('forLoops', forLoops)
-    localStorage.setItem('methods', methods)
-    localStorage.setItem('classes', classes)
-    localStorage.setItem('selectedOption', selectedOption)
-    localStorage.setItem('userInput', userInput)
+    if(code !== ""){
+      // Store codeCount, codeLine, ifElseCount, selectedOption, and userInput in local storage
+      localStorage.setItem('code', code)
+      localStorage.setItem('codeCount', codeCount)
+      localStorage.setItem('codeLine', codeLine)
+      localStorage.setItem('ifElseCount', ifElseCount)
+      localStorage.setItem('singleLineComments', singleLineComments)
+      localStorage.setItem('multiLineComments', multiLineComments)
+      localStorage.setItem('whileLoops', whileLoops)
+      localStorage.setItem('forLoops', forLoops)
+      localStorage.setItem('methods', methods)
+      localStorage.setItem('classes', classes)
+      localStorage.setItem('selectedOption', selectedOption)
+      localStorage.setItem('userInput', userInput)
 
-    axios.post('http://localhost:8000/analyze-code', { code })
-      .then((response) => {
-        setResult(response.data);
-        console.log(response.data);
-        const objStr = JSON.stringify(response.data);
-        localStorage.setItem('result', objStr);
-        console.log(result);
-        navigate('/analyzeResult');
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      axios.post('http://localhost:8000/analyze-code', { code })
+        .then((response) => {
+          setResult(response.data);
+          // console.log(response.data);
+          const objStr = JSON.stringify(response.data);
+          localStorage.setItem('result', objStr);
+          // console.log(result);
+          navigate('/analyzeResult');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }else{
+      alert("please enter the code")
+    }
+    
       
 
     }
@@ -218,20 +222,20 @@ function Home() {
 
           <div className='option-input'>
             <label>
-              Select Option:
+              Select option:
               <select value={selectedOption} onChange={handleOptionChange}>
-                <option value='singleLineComments'>Single Line Comment</option>
-                <option value='multiLineComments'>Multi Line Comments</option>
+                <option value='singleLineComments'>Single line comment</option>
+                <option value='multiLineComments'>Multi line comments</option>
                 <option value='classes'>Classes</option>
                 <option value='methods'>Methods </option>
-                <option value='whileLoops'>While Loops </option>
-                <option value='forLoops'>For Loops </option>
-                <option value='codeLine'>Code Line</option>
-                <option value='ifElseCount'>If-Else Count</option>
+                <option value='whileLoops'>While loops </option>
+                <option value='forLoops'>For loops </option>
+                <option value='codeLine'>Code line</option>
+                <option value='ifElseCount'>If-Else count</option>
               </select>
             </label>
             <label>
-              Check Exceeds or not (Integer):
+              Check exceeds or not (Integer):
               <input
                 type='number'
                 value={userInput}

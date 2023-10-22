@@ -19,7 +19,7 @@ export default function App() {
     <>
       <MDBNavbar expand='lg' dark bgColor='primary'>
         <MDBContainer fluid>
-          <MDBNavbarBrand href='#'>Navbar</MDBNavbarBrand>
+          <MDBNavbarBrand href='/home'>Analyzer</MDBNavbarBrand>
           <MDBNavbarToggler
             type='button'
             data-target='#navbarColor02'
@@ -43,9 +43,9 @@ export default function App() {
               <MDBNavbarItem>
                 <Link to='/login'><MDBNavbarLink>User Details</MDBNavbarLink></Link>
               </MDBNavbarItem>
-              <MDBNavbarItem>
+              {/* <MDBNavbarItem>
                 <MDBNavbarLink href='#'>About</MDBNavbarLink>
-              </MDBNavbarItem>
+              </MDBNavbarItem> */}
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBContainer>

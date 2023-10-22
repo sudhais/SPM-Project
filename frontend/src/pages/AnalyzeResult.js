@@ -84,7 +84,7 @@ function AnalyzeResult() {
     setUserInput(storedUserInput)
     setSelectedOption(storedSelectedOption)
     // setResult(storedResult) // Set selected option from local storage
-    console.log(storedUserInput);
+    // console.log(storedUserInput);
     var graph = {
       userInput:userInput,
       singleLine: singleLineComments,
@@ -124,7 +124,7 @@ function AnalyzeResult() {
       graphData:graph
     }
     setResult(details)
-    console.log(details);
+    // console.log(details);
 
   },[
     codeCount,
