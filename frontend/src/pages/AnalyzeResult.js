@@ -276,35 +276,40 @@ function AnalyzeResult() {
   ]
 
 
-  function handleSave() {
+  async function  handleSave() {
     // Display a prompt and store the project name
     const userInput1 = prompt("Please enter your project name:");
 
     // Check if the user entered something and display it
     if (userInput1 !== null) {
 
-      const date = new Date();
-      const formattedDate = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(date);
-      
-      var finalDataResult = {
-        userID: result.userID,
-        projName: userInput1,
-        reports: result.reports,
-        value: result.value,
-        graphData: result.graphData,
-        date: formattedDate
-      }
-      setFinalData(finalDataResult);
-      // console.log(finalData);
-      axios.post("http://localhost:8000/api/details/new", finalDataResult)
-      .then((res)=>{
-          alert(`${userInput1} successfully saved`)
-      })
-      
+      const res = await axios.get("http://localhost:8000/api/details?keyword=" + result.userID + "&keyword1=" + userInput1)
+      // console.log(res.data.count);
+      if(res.data.count === 0){
+        const date = new Date();
+        const formattedDate = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }).format(date);
+        
+        var finalDataResult = {
+          userID: result.userID,
+          projName: userInput1,
+          reports: result.reports,
+          value: result.value,
+          graphData: result.graphData,
+          date: formattedDate
+        }
+        setFinalData(finalDataResult);
+        // console.log(finalData);
+        axios.post("http://localhost:8000/api/details/new", finalDataResult)
+        .then((res)=>{
+            alert(`${userInput1} successfully saved`)
+        })
+      }else{
+        alert(`Project name ${userInput1} already exist`)
+      }    
     } else {
       alert("You canceled the prompt.");
     }
