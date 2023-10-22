@@ -6,7 +6,6 @@ import './App.css'
 
 //component
 import Home from './components/Home'
-import History from './pages/History'
 
 import HomePage from "./pages/HomePage";
 import Register from "./pages/Register";
